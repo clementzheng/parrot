@@ -1,0 +1,404 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<title>Parrot</title>
+	<meta name="description" content="sketch">
+	<meta name="author" content="Clement Zheng (clementzheng.info)">
+	
+	<!--CSS-->
+	<link href='https://fonts.googleapis.com/css?family=Roboto+Mono:400,300,300italic,400italic,500,500italic,700,700italic,100,100italic' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=Roboto:400,300,500,700,900,400italic,500italic' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="css/style.css">
+	
+	<!--SCRIPTS-->
+	<script language="javascript" type="text/javascript" src="js/lib/jquery-1.11.3.min.js"></script>
+	<script language="javascript" type="text/javascript" src="js/lib/jquery-ui.min.js"></script>
+	<script language="javascript" type="text/javascript" src="js/lib/canvas2svg.js"></script>
+	<script language="javascript" type="text/javascript" src="js/lib/FileSaver.js"></script>
+	<script language="javascript" type="text/javascript" src="js/lib/three.min.js"></script>	
+	<script language="javascript" type="text/javascript" src="js/lib/STLExporter.js"></script>	
+	<script language="javascript" type="text/javascript" src="js/math.js"></script>
+	<script language="javascript" type="text/javascript" src="js/menu.js"></script>
+	<script language="javascript" type="text/javascript" src="js/main.js"></script>
+	<script language="javascript" type="text/javascript" src="js/mouseKey.js"></script>
+	<script language="javascript" type="text/javascript" src="js/appearance.js"></script>
+	<script language="javascript" type="text/javascript" src="js/designMode.js"></script>
+	<script language="javascript" type="text/javascript" src="js/view3D.js"></script>
+	<script language="javascript" type="text/javascript" src="js/fabricationMode.js"></script>
+	<script language="javascript" type="text/javascript" src="js/joints.js"></script>
+	<script language="javascript" type="text/javascript" src="js/exportSVG.js"></script>
+	<script language="javascript" type="text/javascript" src="js/exportSTL.js"></script>
+	
+	
+</head>
+
+<body onload="newFile()">
+
+	<div id="workspaceCanvasDiv">
+		<canvas id="workspaceCanvas"></canvas>
+	</div>
+	
+	<div id="topMenu">
+		<div id="ghost2D" class="item hidden" onclick="toggleGhost2D()">
+			Ghost 2D
+		</div>
+		<div id="alignment" class="item hidden">
+			<div class="button" onclick="alignTop()">
+				<div class="active"><img src="images/align-01.png"></div>
+				<div class="passive"><img src="images/align-01_w.png"></div>
+			</div>
+			<div class="button" onclick="alignHoriCenter()">
+				<div class="active"><img src="images/align-02.png"></div>
+				<div class="passive"><img src="images/align-02_w.png"></div>
+			</div>
+			<div class="button" onclick="alignBottom()">
+				<div class="active"><img src="images/align-03.png"></div>
+				<div class="passive"><img src="images/align-03_w.png"></div>
+			</div>
+			<div class="button" onclick="alignLeft()">
+				<div class="active"><img src="images/align-04.png"></div>
+				<div class="passive"><img src="images/align-04_w.png"></div>
+			</div>
+			<div class="button" onclick="alignVertCenter()">
+				<div class="active"><img src="images/align-05.png"></div>
+				<div class="passive"><img src="images/align-05_w.png"></div>
+			</div>
+			<div class="button" onclick="alignRight()">
+				<div class="active"><img src="images/align-06.png"></div>
+				<div class="passive"><img src="images/align-06_w.png"></div>
+			</div>
+			<div class="button" onclick="distributeHori()">
+				<div class="active"><img src="images/align-07.png"></div>
+				<div class="passive"><img src="images/align-07_w.png"></div>
+			</div>
+			<div class="button" onclick="distributeVert()">
+				<div class="active"><img src="images/align-08.png"></div>
+				<div class="passive"><img src="images/align-08_w.png"></div>
+			</div>
+		</div>
+	</div>
+	
+	<div id="leftMenu">
+		<div id="sideBar">
+		</div>
+		<div id="view3DMenu" class="menuItem">
+			<div id="view3DIcon" class="icon">
+				<div class="active"><img src="images/icons-12.png" alt="fabrication mode"></div>
+				<div class="passive"><img src="images/icons-12_w.png" alt="fabrication mode"></div>
+				<div class="info">View 3D Model</div>
+			</div>
+			<div id="view3DCanvasDiv" class="menu">
+				<div class="title">View 3D Model</div>
+				<div id="modelSize"></div>
+				<canvas id="view3DCanvas"></canvas>
+				<div id="wireframe" class="line">
+					<input id="checkWireframe" class="checkbox" type="checkbox">
+					<label class="checkboxLabel">Wireframe</label>
+				</div>
+			</div>
+		</div>
+		<div id="options" class="menuItem">
+			<div id="optionsIcon">
+				<div id="detailsIcon" class="icon">
+					<div class="active"><img src="images/icons-13.png" alt="fabrication mode"></div>
+					<div class="passive"><img src="images/icons-13_w.png" alt="fabrication mode"></div>
+					<div class="info">Design Details</div>
+				</div>
+				<div id="jointsIcon" class="icon">
+					<div class="active"><img src="images/icons-15.png" alt="fabrication mode"></div>
+					<div class="passive"><img src="images/icons-15_w.png" alt="fabrication mode"></div>
+					<div class="info">Joint Parameters</div>
+				</div>
+				<div id="canvasIcon" class="icon">
+					<div class="active"><img src="images/icons-14.png" alt="fabrication mode"></div>
+					<div class="passive"><img src="images/icons-14_w.png" alt="fabrication mode"></div>
+					<div class="info">Fabrication Canvas</div>
+				</div>
+				<div id="exportIcon" class="icon">
+					<div class="active"><img src="images/icons-17.png" alt="fabrication mode"></div>
+					<div class="passive"><img src="images/icons-17_w.png" alt="fabrication mode"></div>
+					<div class="info">Save & Export</div>
+				</div>
+				<div id="docIcon" class="icon active">
+					<div class="active"><img src="images/icons-16.png" alt="fabrication mode"></div>
+					<div class="passive"><img src="images/icons-16_w.png" alt="fabrication mode"></div>
+					<div class="info">New Document</div>
+				</div>
+			</div>
+			<div id="optionsMenu">
+			
+				<div id="detailsMenu" class="menu">
+					<div class="title">Design Details</div>
+					<div class="menuContent">
+						<div id="caps" class="line">
+							<div class="lineItem">
+								<b>Caps:</b>
+							</div>
+							<div class="spacer"></div>
+							<div class="lineItem">
+								<input id="checkTopCap" class="checkbox" type="checkbox">
+								<label class="checkboxLabel">Top</label>
+							</div>
+							<div class="spacer"></div>
+							<div class="lineItem">
+								<input id="checkBottomCap" class="checkbox" type="checkbox">
+								<label class="checkboxLabel">Bottom</label>
+							</div>
+						</div>
+						<div id="sides" class="line">
+							<div class="lineItem">
+								<b>Number of Sides:</b>
+							</div>
+							<div class="spacer"></div>
+							<div class="smallButton" id="subtractSide">
+								<b>&minus;</b>
+							</div>
+							<div class="lineItem valueItem" id="sideValue">6</div>
+							<div class="smallButton" id="addSide">
+								<b>+</b>
+							</div>
+						</div>
+						<div id="twist" class="line">
+							<div class="lineItem">
+								<b>Twist:</b>
+							</div>
+							<div class="spacer"></div>
+							<div class="lineItem" id="twistDiv">
+								<input id="twistSlider" type="range"  min="-1" max="1"  value="0" step="0.05"/>
+								<div class="twistTick" style="text-align: left;" onclick="setTwist(-1.0)">-1.0</div>
+								<div class="twistTick"style="text-align: left;" onclick="setTwist(-0.5)">-0.5</div>
+								<div class="twistTick"style="text-align: center;" onclick="setTwist(0.0)">0.0</div>
+								<div class="twistTick"style="text-align: right;" onclick="setTwist(0.5)">+0.5</div>
+								<div class="twistTick"style="text-align: right;" onclick="setTwist(1.0)">+1.0</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div id="jointsMenu" class="menu">
+					<div class="title">Joint Parameters</div>
+					<div class="menuContent">
+						<div id="jointType" class="line">
+							<div class="lineItem">
+								<b>Joint Type:</b>
+							</div>
+							<div class="spacer"></div>
+							<select id="jointsDropdown" style="width:125px;">
+							</select>
+						</div>
+						<div id="jointParam" class="line" style="margin-top:-15px;">
+						</div>
+					</div>
+				</div>
+				
+				<div id="canvasMenu" class="menu">
+					<div class="title">Fabrication Canvas</div>
+					<div class="menuContent">
+						<div id="units" class="line">
+							<div class="lineItem">
+								<b>Units:</b>
+							</div>
+							<div class="spacer"></div>
+							<div class="lineItem">
+								<input id="checkMM" class="checkbox" type="checkbox" checked>
+								<label class="checkboxLabel">mm</label>
+							</div>
+							<div class="spacer"></div>
+							<div class="lineItem">
+								<input id="checkInch" class="checkbox" type="checkbox">
+								<label class="checkboxLabel">inch</label>
+							</div>
+						</div>
+						<div id="canvasCount" class="line">
+							<div class="lineItem">
+								<b>Number of Canvas(es):</b>
+							</div>
+							<div class="spacer"></div>
+							<div class="smallButton" id="subtractCanvas">
+								<b>&minus;</b>
+							</div>
+							<div class="lineItem valueItem" id="canvasValue">1</div>
+							<div class="smallButton" id="addCanvas">
+								<b>+</b>
+							</div>
+						</div>
+						<div id="canvasCount" class="line">
+							<div class="lineItem">
+								<b>Canvas Size (</b><b id="canvasSize"></b><b>)</b>
+							</div>
+							</br>
+							<div class="lineItem" style="clear:both; margin-top: 15px; width: 60px;">Width: </div>
+							<div class="lineItem" style="margin-top: 15px"><input style="width:100px;" class="numberInput" type="number" id="canvasWidth"></div>
+							<div class="lineItem" style="clear:both; margin-top: 15px; width: 60px;">Height: </div>
+							<div class="lineItem" style="margin-top: 15px"><input style="width:100px;" class="numberInput" type="number" id="canvasHeight"></div>
+							<div class="lineItem" style="clear:both; margin-top: 15px;"><div id="setCanvasSize" class="bigButton" style="width:164px;">set canvas size</div></div>
+						</div>
+					</div>
+				</div>
+				
+				<div id="exportMenu" class="menu">
+					<div class="title">Save & Export</div>
+					<div class="menuContent">
+						<div class="line">
+							<div class="lineItem" style="width:80px;">
+								<b>Filename: </b>
+							</div>
+							<div class="lineItem"><input style="width:150px;" id="filename"></div>
+						</div>
+						<div class="line">
+							<div class="lineItem">
+								<div id="saveFile" class="bigButton" style="width:234px;">save file</div>
+							</div>
+							<div class="lineItem">
+								<div id="exportFile" class="bigButton" style="width:234px; margin-top: 15px;">export SVG</div>
+							</div>
+							<div class="lineItem" style="width:120px; clear:both; margin-top: 20px;">
+								Wall thickness:
+							</div>
+							<div class="lineItem" style="width:100px; margin-top: 20px;"><input style="width:110px;" id="wallThickness"></div>
+							<div class="lineItem" style="clear:both;">
+								<div id="exportSTL" class="bigButton" style="width:234px; margin-top: 10px;">export STL</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div id="docMenu" class="menu active">
+					<div class="title">New Document</div>
+					<div class="menuContent">
+						<div id="sideCount" class="line">
+							<div class="lineItem" style="width: 150px;">
+								<b>Number of Sides:</b>
+							</div>
+							<div class="smallButton" id="subtractInitSides">
+								<b>&minus;</b>
+							</div>
+							<div class="lineItem valueItem" id="initSidesValue">6</div>
+							<div class="smallButton" id="addInitSides">
+								<b>+</b>
+							</div>
+						</div>
+						<div id="layerCount" class="line" style="margin-top: -15px;">
+							<div class="lineItem" style="width: 150px;">
+								<b>Number of Layers:</b>
+							</div>
+							<div class="smallButton" id="subtractInitLayers">
+								<b>&minus;</b>
+							</div>
+							<div class="lineItem valueItem" id="initLayerValue">4</div>
+							<div class="smallButton" id="addInitLayers">
+								<b>+</b>
+							</div>
+						</div>
+						<div class="line" style="margin-top: -10px;">
+							<div class="lineItem">
+								<div id="newDocument" class="bigButton" style="width:240px;">generate new file</div>
+							</div>
+							<div class="lineItem">
+								<label for="loadFile" id="loadDocument" class="bigButton" style="width:240px; margin-top: 15px;">load file</label>
+								<input id="loadFile" style="display:none;" type="file">
+							</div>
+							<div class="lineItem" id="loadFileText" style="width: 240px; font-size:10px; margin-top:20px;">
+							</div>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+	
+	<div id="rightMenu">
+		<div id="mode2D3D">
+			<div id="mode2D" class="icon">
+				<div class="active"><img src="images/icons-01.png" alt="fabrication mode"></div>
+				<div class="passive"><img src="images/icons-01_w.png" alt="fabrication mode"></div>
+				<div class="info">Fabrication Mode [2]</div>
+			</div>
+			<div id="mode3D" class="icon active">
+				<div class="active"><img src="images/icons-02.png" alt="fabrication mode"></div>
+				<div class="passive"><img src="images/icons-02_w.png" alt="fabrication mode"></div>
+				<div class="info">Design Mode [3]</div>
+			</div>
+		</div>
+		
+		<div id="editMenu">
+			<div id="editPoint" class="icon active">
+				<div class="active"><img src="images/icons-03.png" alt="fabrication mode"></div>
+				<div class="passive"><img src="images/icons-03_w.png" alt="fabrication mode"></div>
+				<div class="info">Pull Points [e]</div>
+			</div>
+			<div id="arrange" class="icon hidden">
+				<div class="active"><img src="images/icons-09.png" alt="fabrication mode"></div>
+				<div class="passive"><img src="images/icons-09_w.png" alt="fabrication mode"></div>
+				<div class="info">Arrange Parts [r]</div>
+			</div>
+			<div id="addPoint" class="icon">
+				<div class="active"><img src="images/icons-04.png" alt="fabrication mode"></div>
+				<div class="passive"><img src="images/icons-04_w.png" alt="fabrication mode"></div>
+				<div class="info">Add Points [a]</div>
+			</div>
+			<div id="removePoint" class="icon">
+				<div class="active"><img src="images/icons-05.png" alt="fabrication mode"></div>
+				<div class="passive"><img src="images/icons-05_w.png" alt="fabrication mode"></div>
+				<div class="info">Remove Points [s]</div>
+			</div>
+			<div id="split" class="icon hidden">
+				<div class="active"><img src="images/icons-10.png" alt="fabrication mode"></div>
+				<div class="passive"><img src="images/icons-10_w.png" alt="fabrication mode"></div>
+				<div class="info">Split Parts [s]</div>
+			</div>
+			<div id="fuse" class="icon hidden">
+				<div class="active"><img src="images/icons-11.png" alt="fabrication mode"></div>
+				<div class="passive"><img src="images/icons-11_w.png" alt="fabrication mode"></div>
+				<div class="info">Fuse Parts [f]</div>
+			</div>
+			<div id="scale" class="icon">
+				<div class="active"><img src="images/icons-06.png" alt="fabrication mode"></div>
+				<div class="passive"><img src="images/icons-06_w.png" alt="fabrication mode"></div>
+				<div class="info">Scale Design [c]</div>
+			</div>
+			<div id="measure" class="icon">
+				<div class="active"><img src="images/icons-08.png" alt="fabrication mode"></div>
+				<div class="passive"><img src="images/icons-08_w.png" alt="fabrication mode"></div>
+				<div class="info">Measure [m]</div>
+			</div>
+			<div id="pan" class="icon">
+				<div class="active"><img src="images/icons-07.png" alt="fabrication mode"></div>
+				<div class="passive"><img src="images/icons-07_w.png" alt="fabrication mode"></div>
+				<div class="info">Pan [space]</div>
+			</div>
+		</div>
+	<div>
+	
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

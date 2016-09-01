@@ -1,0 +1,739 @@
+html, body {
+	position: absolute;
+	top: 0;
+	left: 0;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: 100%;
+
+	background: rgb(200,200,200);
+	background: -moz-linear-gradient(top,  rgba(200,200,200,1) 0%, rgba(100,100,100,1) 100%);
+	background: -webkit-linear-gradient(top,  rgba(200,200,200,1) 0%,rgba(100,100,100,1) 100%);
+	background: linear-gradient(to bottom,  rgba(200,200,200,1) 0%,rgba(100,100,100,1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c8c8c8', endColorstr='#646464',GradientType=0 );
+
+	cursor: default;
+	font-family: "Roboto Mono", monospace;
+	font-weight: 500;
+	font-size: 13px;
+	color: #000;
+	
+	-webkit-user-select: none; /* Chrome/Safari */        
+	-moz-user-select: none; /* Firefox */
+	-ms-user-select: none; /* IE10+ */
+
+}
+
+#workspaceCanvasDiv {
+	position: absolute;
+	top: 0;
+	left: 0;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: 100%;
+}
+
+#workspaceCanvas {
+	position: absolute;
+	top: 0;
+	left: 0;
+	margin: 0;
+	padding: 0;
+}
+
+#workspaceCanvas {
+	position: absolute;
+	margin: 0;
+	padding: 0;
+}
+
+
+
+
+#leftMenu {
+	position: fixed;
+	left: 0;
+	top: 0;
+	margin: 0;
+	height: 100%;
+	width: 500px;
+}
+
+.menuItem {
+	position: relative;
+	float: left;
+	width: inherit;
+	height: auto;
+}
+
+#sideBar {
+	position: fixed;
+	left: 0;
+	top: 0;
+	margin: 0;
+	height: 100%;
+	z-index: 98;
+	width: 50px;
+	background: rgba(30, 30, 30, 0.9);
+}
+
+#leftMenu .icon {
+	position: relative;
+	float: left;
+	height: 50px;
+	width: 50px;
+	z-index: 99;
+	margin: 0;
+	padding: 0;
+}
+
+#leftMenu .icon  img{
+	opacity: 0.5;
+	margin-left: -1px;
+}
+
+#leftMenu .icon .active {
+	position: relative;
+	float: left;
+	display: none;
+	background: rgba(255, 255, 255, 0.95);
+	width: 50px;
+	height: 50px;
+}
+
+#leftMenu .icon .passive {
+	position: relative;
+	float: left;
+	display: block;
+	background: rgba(30, 30, 30, 1.0);
+	width: 50px;
+	height: 50px;
+}
+
+#leftMenu .icon .info {
+	display: none;
+	position: fixed;
+	left: 65px;
+	font-size: 13px;
+	font-weight: 400;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	margin-top: 30px;
+}
+
+#leftMenu .icon.active .active {
+	display: block;
+}
+
+#leftMenu .icon.active .active img {
+	opacity: 0.7;
+}
+
+#leftMenu .icon.active .passive {
+	display: none;
+}
+
+#leftMenu .icon:hover .active {
+	display: block;
+	cursor: pointer;
+}
+
+#leftMenu .icon:hover .info {
+	display: block;
+}
+
+#leftMenu .icon.active .info {
+	display: none;
+}
+
+#leftMenu .icon:hover .active img {
+	opacity: 1.0;
+}
+
+#leftMenu .icon:active .active img {
+	opacity: 0.7;
+}
+
+#leftMenu .icon:hover .passive {
+	display: none;
+}
+
+
+
+.menu {
+	display: none;
+}
+
+.active.menu {
+	position: relative;
+	float: left;
+	display: block;
+	box-sizing: border-box;
+	max-width: 420px;
+	min-width: 350px;
+	min-height: 250px;
+	width: 410px;
+	height: inherit;
+	background: rgba(255, 255, 255, 0.8);
+	z-index: 99;
+}
+
+.active.menu .title {
+	position: absolute;
+	display: block;
+	top: 15px;
+	left: 15px;
+	font-size: 13px;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+}
+
+#view3DMenu {
+	margin-bottom: 5px;
+}
+
+#view3DCanvasDiv {
+	margin: 0;
+	padding: 0;
+	max-height: 420px;
+	min-height: 350px;
+	height: 420px;
+}
+
+#modelSize {
+	font-size: 12px;
+	font-weight: 400;
+	position: absolute;
+	bottom: 15px;
+	right: 20px;
+}
+
+#optionsIcon {
+	position: relative;
+	float: left;
+	margin: 0;
+	padding: 0;
+	width: 50px;
+}
+
+#detailsMenu {
+	height: auto;
+}
+
+#jointsMenu {
+	height: auto;
+}
+
+#canvasMenu {
+	height: auto;
+}
+
+#exportMenu {
+	height: auto;
+}
+
+#docMenu {
+	height: auto;
+}
+
+
+#rightMenu {
+	position: fixed;
+	top: 20px;
+	right: 20px;
+	width: auto;
+	height: auto;
+}
+
+#mode2D3D {
+	position: relative;
+	float: right;
+	width: 100px;
+	height: auto;
+	clear: both;
+}
+
+#editMenu {
+	position: relative;
+	float: right;
+	width: 50px;
+	height: auto;
+	clear: both;
+	margin-top: 20px;
+}
+
+.line {
+	position: relative;
+	float: left;
+	box-sizing: border-box;
+	width: 100%;
+	padding: 0 0 0 40px;
+	font-size: 12px;
+	font-weight: 400;
+	margin-bottom: 30px;
+}
+
+.menuContent {
+	position: relative;
+	float: left;
+	margin-top: 60px;
+	width: 100%;
+}
+
+.lineItem {
+	position: relative;
+	float: left;
+}
+
+.spacer {
+	position: relative;
+	float: left;
+	width: 20px;
+	height: 1px;
+}
+
+.checkbox {
+	display: inline-block;
+    vertical-align: middle;
+    cursor: pointer;
+	opacity: 0;
+    position: absolute;
+}
+
+.checkbox + .checkboxLabel:before {
+	content: '';
+    background: none;
+    border: 1px solid #666;
+    display: inline-block;
+    vertical-align: bottom;
+    width: 10px;
+    height: 10px;
+    padding: 2px;
+    margin-right: 10px;
+    text-align: center;
+}
+
+.checkbox:checked + .checkboxLabel:before {
+    background: #777;
+}
+
+.smallButton {
+	position: relative;
+	float: left;
+	width: 25px;
+	height: 25px;
+	display: inline-block;
+	text-align: center;
+	background: none;
+	font-size: 22px;
+	line-height: 21px;
+	box-sizing: border-box;
+	border: 1px solid #888;
+	color: #444;
+}
+.smallButton:hover {
+	cursor: pointer;
+	background: #222;
+	color: #FFF;
+}
+.smallButton:active {
+	cursor: pointer;
+	background: #000;
+	color: #FFF;
+}
+
+.bigButton {
+	position: relative;
+	float: left;
+	display: inline-block;
+	text-align: center;
+	background: none;
+	font-size: 13px;
+	line-height: 21px;
+	box-sizing: border-box;
+	border: 1px solid #888;
+	color: #000;
+	padding: 3px 15px;
+}
+.bigButton:hover {
+	cursor: pointer;
+	background: #222;
+	color: #FFF;
+}
+.bigButton:active {
+	cursor: pointer;
+	background: #000;
+	color: #FFF;
+}
+
+.valueItem {
+	width: 40px;
+	height: 25px;
+	text-align: center;
+	font-size: 16px;
+	font-weight: 400;
+	box-sizing: border-box;
+	border-top: 1px solid #888;
+	border-bottom: 1px solid #888;
+}
+
+#wireframe {
+	position: absolute;
+	left: 15px;
+	bottom: 15px;
+	margin: 0;
+	padding: 0;
+}
+
+#twistDiv {
+	width: 200px;
+}
+
+#twistSlider {
+	width: 100%;
+}
+
+.twistTick {
+	position: relative;
+	float: left;
+	width: 20%;
+	margin-top: 5px;
+	font-size: 10px;
+}
+
+.twistTick:hover {
+	font-weight: 700;
+	cursor: pointer;
+}
+
+.paramName {
+	width: 120px;
+	clear: both;
+	margin-top: 5px;
+	margin-right: 10px;
+	text-align: left;
+}
+
+.paramValue {
+	width: 90px;
+	margin-top: 5px;
+}
+
+.paramValue input {
+	width: 100%;
+}
+
+
+
+
+
+#rightMenu .icon {
+	position: relative;
+	float: right;
+	width: 50px;
+	height: 50px;
+	margin: 0;
+	padding: 0;
+}
+
+#rightMenu .icon .active {
+	position: relative;
+	float: right;
+	width: 50px;
+	height: 50px;
+	display: none;
+	background: rgba(240, 240, 240, 0.9);
+}
+
+#rightMenu .icon .passive {
+	position: relative;
+	float: right;
+	width: 50px;
+	height: 50px;
+	display: block;
+	background: rgba(30, 30, 30, 0.9);
+}
+
+#mode2D3D .icon .info {
+	position: fixed;
+	text-align: right;
+	right: 135px;
+	height: 50px;
+	display: none;
+	font-size: 13px;
+	font-weight: 400;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	margin-top: 30px;
+}
+
+#editMenu .icon .info {
+	position: fixed;
+	text-align: right;
+	right: 85px;
+	height: 50px;
+	display: none;
+	font-size: 13px;
+	font-weight: 400;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	margin-top: 30px;
+}
+
+#rightMenu .icon img {
+	opacity: 0.5;
+}
+
+#rightMenu .icon.active .active {
+	display: block;
+}
+
+#rightMenu .icon.active .active img {
+	opacity: 0.6;
+}
+
+#rightMenu .icon.active .passive {
+	display: none;
+}
+
+#rightMenu .icon:hover .active {
+	display: block;
+	cursor: pointer;
+}
+
+#rightMenu .icon:hover .active img {
+	opacity: 0.9;
+}
+
+#rightMenu .icon:active .active img {
+	opacity: 0.6;
+}
+
+#rightMenu .icon:hover .passive {
+	display: none;
+}
+
+#rightMenu .icon:hover .info {
+	display: block;
+}
+
+#editMenu .icon.hidden {
+	display: none;
+}
+
+
+#topMenu {
+	position: fixed;
+	top: 30px;
+	width: 100%;
+	height: auto;
+}
+
+#topMenu .item {
+	display: block;
+	position: relative;
+	margin: auto auto;
+}
+
+#topMenu .item.hidden {
+	display: none;
+}
+
+#ghost2D {
+	position: relative;
+	text-align: center;
+	width: 125px;
+	height: 31px;
+	background: rgba(30, 30, 30, 0.9);
+	color: rgba(240, 240, 240, 0.7);
+	line-height: 31px;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	border-radius: 15px;
+}
+
+#ghost2D.item.active {
+	color: rgba(30, 30, 30, 0.9);
+	background: rgba(240, 240, 240, 0.9);
+}
+
+#ghost2D:hover.item.active{
+	background: rgba(30, 30, 30, 0.9);
+	color: rgba(240, 240, 240, 0.7);
+	cursor: pointer;
+}
+
+#ghost2D:hover.item{
+	color: rgba(30, 30, 30, 0.9);
+	background: rgba(240, 240, 240, 0.9);
+	cursor: pointer;
+}
+
+
+#alignment {
+	position: relative;
+	width: 296px;
+	height: 37px;
+}
+
+#alignment .button {
+	position: relative;
+	float: left;
+	width: 37px;
+	height: 37px;
+}
+
+.button .active {
+	display: none;
+	background: rgba(240, 240, 240, 0.9);
+	width: 37px;
+	height: 37px;
+}
+
+.button .passive {
+	display: block;
+	background: rgba(30, 30, 30, 0.9);
+	width: 37px;
+	height: 37px;
+}
+
+#alignment .button img{
+	width: 29px;
+	height: 29px;
+	margin: 3px;
+}
+
+.button:hover .active {
+	display: block;
+	cursor: pointer;
+}
+
+.button:hover .passive {
+	display: none;
+}
+
+b {
+	font-weight: 700;
+}
+
+
+/*https://css-tricks.com/styling-cross-browser-compatible-range-inputs-css/*/
+
+input[type=range] {
+  -webkit-appearance: none; /* Hides the slider so that custom slider can be made */
+  width: 100%; /* Specific width is required for Firefox. */
+  background: transparent; /* Otherwise white in Chrome */
+}
+
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+}
+
+input[type=range]:focus {
+  outline: none; /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */
+}
+
+input[type=range]::-ms-track {
+  width: 100%;
+  cursor: pointer;
+
+  /* Hides the slider so custom styles can be added */
+  background: transparent; 
+  border-color: transparent;
+  color: transparent;
+}
+
+
+/* CUSTOM SLIDER STYLING Special styling for WebKit/Blink */
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  border: 1px solid #333;
+  height: 20px;
+  width: 20px;
+  border-radius: 10px;
+  background: #DDD;
+  cursor: pointer;
+  margin-top: -1px;
+}
+
+/* All the same stuff for Firefox */
+input[type=range]::-moz-range-thumb {
+	border: 1px solid #333;
+	height: 20px;
+	width: 20px;
+	border-radius: 10px;
+	background: #DDD;
+	cursor: pointer;
+}
+
+/* All the same stuff for IE */
+input[type=range]::-ms-thumb {
+	border: 1px solid #333;
+	height: 20px;
+	width: 20px;
+	border-radius: 10px;
+	background: #DDD;
+	cursor: pointer;
+}
+
+/*TRACK*/
+
+input#twistSlider {
+	padding: 0;
+	margin: 0;
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+	width: 100%;
+	height: 20px;
+	cursor: pointer;
+	border: 1px solid #888;
+	background: none;
+	border-radius: 10px;
+	padding: 0;
+	margin: 0;
+}
+
+input[type=range]:focus::-webkit-slider-runnable-track {
+	background: none;
+}
+
+input[type=range]::-moz-range-track {
+	width: 100%;
+	height: 20px;
+	cursor: pointer;
+	border: 1px solid #888;
+	background: none;
+	border-radius: 10px;
+	padding: 0;
+	margin: 0;
+}
+
+input[type=range]::-ms-track {
+	width: 100%;
+	height: 20px;
+	cursor: pointer;
+	border: 1px solid #888;
+	background: none;
+	border-radius: 10px;
+	padding: 0;
+	margin: 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
